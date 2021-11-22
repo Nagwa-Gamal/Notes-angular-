@@ -1,0 +1,148 @@
+<form>
+<h2 *ngIf="app.Login" class="text-center" >Notes</h2>
+
+ <div class="row rowbtn ">
+  <a (click)="getAllNotes()" class="allnotebtn btn btn-primary btn-block btn-sm p-0 btncard" btncard>All Notes</a>
+   
+   <a  class="notebtn btn btn-primary btn-block btn-sm p-0 btncard" data-toggle="modal" data-target="#addNote">Add Note</a> 
+
+
+      <div class="input-group searchgroup">
+        <input   ngModel name="title" #title="ngModel" type="search" placeholder="Write Title of Note" id="form1" class="form-control" />
+        <button (click)="search(title.value)"  type="button" class="btn btn-primary">
+        <i class="fas fa-search"></i>
+      </button>
+    </div> 
+
+     </div>
+    </form>
+
+
+<div class="container">
+ <div class="row">
+
+  <div class="card col-md-3 col-sm-6 p-0 m-3 notebody" *ngFor="let note of result" >
+      <div class="card-body">
+        <h5 class="card-title">Title : {{note.title}}</h5>
+        <p class="card-text"> {{note.text.substring(0,100)}}</p>
+       
+  </div>
+
+      <div class="btns"> 
+       <i (click)="deleteNote(note.id)" class="fas fa-trash-alt fascard"> Delete</i> 
+        <i data-toggle="modal" data-target="#editNote" (click)="passvalues(note)" class="fas fa-edit fascard">Edit</i>
+        <i data-toggle="modal" data-target="#showNote"  (click)="passvalues(note)" class="fas fa-eye fascard">Show</i>
+      </div> 
+      
+    </div>
+
+  </div>
+  </div>
+
+
+<!-- edit note-->
+<div class="modal pt-5 fade" id="editNote" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    
+  <div class="modal-dialog">
+   
+    <form [formGroup]='editForm' (ngSubmit)="editNote(editForm.value)" >
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+          <div class="form-group">
+              <input type="text" formControlName="title" class="form-control" placeholder=" Title" >
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" formControlName="text"  cols="30" rows="10" placeholder="enter  your Note" ></textarea>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="!editForm.valid"  type="submit" class="btn btn-info btncard" >Edit</button>
+          <button class="btn btn-danger close btncard" type="button"  data-dismiss="modal" aria-label="Close">Cancle  </button>
+        </div>
+      </div>
+    </form>
+  
+  </div>
+
+</div>
+
+
+
+
+  <!-- show note-->
+  
+  <div class="modal pt-5 fade" id="showNote" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    
+    <div class="modal-dialog">
+     
+      <form [formGroup]='showForm'  >
+        <div class="modal-content">
+        
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+            <div class="form-group">
+                <input type="text" formControlName="title" class="form-control" placeholder=" Title" >
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" formControlName="text"  cols="30" rows="10" placeholder="enter  your Note" ></textarea>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-danger close btncard" type="button"  data-dismiss="modal" aria-label="Close">Cancle  </button>
+
+          </div>
+        </div>
+      </form>
+    
+    </div>
+  
+  </div>
+<!-- add note-->
+  
+<div class="modal pt-5 fade" id="addNote" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    
+  <div class="modal-dialog">
+   
+    <form [formGroup]='addForm' (ngSubmit)="addNote(addForm.value)" >
+      <div class="modal-content">
+      
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+          <div class="form-group">
+              <input type="text" formControlName="title" class="form-control" placeholder=" Title" >
+          </div>
+          <div class="form-group">
+            <textarea class="form-control" formControlName="text"  cols="30" rows="10" placeholder="enter  your Note" ></textarea>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button [disabled]="!addForm.valid"  type="submit" class="btn btn-info btncard" >Add</button>
+          <button class="btn btn-danger close btncard" type="button"  data-dismiss="modal" aria-label="Close">Cancle  </button>
+
+        </div>
+      </div>
+    </form>
+  
+  </div>
+
+</div>
